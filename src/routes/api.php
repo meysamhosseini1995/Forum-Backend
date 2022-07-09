@@ -24,7 +24,7 @@ Route::group(['namespace' => $api_namespace], function () {
     Route::group(['prefix' => 'v1', 'namespace' => 'V01'], function () {
 
         // Authentication Routes
-        Route::group(['prefix' => 'auth/', 'namespace' => 'Auth'], function () {
+        Route::group(['prefix' => 'auth/'], function () {
             Route::get('user', 'AuthController@user')->name("auth.user");
             Route::post('login', 'AuthController@login')->name("auth.login");
             Route::post('logout', 'AuthController@logout')->name("auth.logout");
