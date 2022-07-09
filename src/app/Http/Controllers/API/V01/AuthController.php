@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API\V01\Auth;
+namespace App\Http\Controllers\API\V01;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use function Illuminate\Session\userId;
 
 class AuthController extends Controller
 {
