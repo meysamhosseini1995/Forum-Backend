@@ -30,6 +30,13 @@ Route::group(['namespace' => $api_namespace], function () {
             Route::post('logout', 'AuthController@logout')->name("auth.logout");
             Route::post('register', 'AuthController@register')->name("auth.register");
         });
+
+        // Channel Routes
+        Route::group(['prefix' => 'channel/'], function () {
+            Route::get('all', 'ChannelController@getAllChannelsList')->name("channels.all");
+            Route::post('create', 'ChannelController@createNewChannel')->name("channels.create");
+            Route::post('edit', 'ChannelController@editChannel')->name("channels.edit");
+        });
     });
 
 });
