@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API\V01;
+namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Channel;
 use App\Repositories\ChannelRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Str;
 
 class ChannelController extends Controller
 {

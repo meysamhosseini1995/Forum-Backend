@@ -21,7 +21,7 @@ $api_namespace = 'App\Http\Controllers\API';
 
 Route::group(['namespace' => $api_namespace], function () {
 
-    Route::group(['prefix' => 'v1', 'namespace' => 'V01'], function () {
+    Route::group(['prefix' => 'v1', 'namespace' => 'V1'], function () {
 
         // Authentication Routes
         Route::group(['prefix' => 'auth/'], function () {
