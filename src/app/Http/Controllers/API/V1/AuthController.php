@@ -29,7 +29,9 @@ class AuthController extends Controller
         ]);
 
         // Insert User Into Database
-        resolve(UserRepository::class)->create($request);
+        $user = resolve(UserRepository::class)->create($request);
+        $user->email == config('permission.default_super_admin_email') ? $user->assignRole("SuperAdmin") : $user->assignRole("User");
+
 
         return response()->json([
             'message'=> 'User Created Successfully'
