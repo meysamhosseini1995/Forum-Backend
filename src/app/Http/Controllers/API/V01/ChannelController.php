@@ -14,7 +14,8 @@ class ChannelController extends Controller
 {
     public function getAllChannelsList()
     {
-        return response()->json(Channel::all(), 200);
+        $result = resolve(ChannelRepository::class)->all();
+        return response()->json($result, Response::HTTP_OK);
     }
 
     /**
@@ -39,15 +40,16 @@ class ChannelController extends Controller
     }
 
     /**
-     * Edit Channel
+     * Update Channel
      *
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function editChannel(Request $request)
+    public function updateChannel(Request $request)
     {
         $request->validate([
+            'id' => 'required',
             'name' => 'required'
         ]);
 
@@ -57,6 +59,27 @@ class ChannelController extends Controller
         return response()->json([
             'message' => 'channel edited successfully'
         ], Response::HTTP_OK);
+    }
+
+
+    /**
+     * Delete Channel
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function deleteChannel(Request $request)
+    {
+        $request->validate([
+            'id'=>['required']
+        ]);
+
+        // Delete Channel In DataBase
+        resolve(ChannelRepository::class)->delete($request->id);
+
+        return response()->json([
+            "message"=>'channel deleted successfully'
+        ],Response::HTTP_OK);
     }
 
 
