@@ -33,9 +33,9 @@ class ChannelRepository
     /**
      * @param Request $request
      */
-    public function update(Request $request): void
+    public function update($id,Request $request): void
     {
-        Channel::find($request->id)->update([
+        Channel::find($id)->update([
             'name' => $request->name,
             'slug' => Str::slug($request->name)
         ]);

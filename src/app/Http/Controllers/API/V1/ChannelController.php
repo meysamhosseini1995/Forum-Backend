@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 
 class ChannelController extends Controller
 {
-    public function getAllChannelsList()
+    public function index()
     {
         $result = resolve(ChannelRepository::class)->all();
         return response()->json($result, Response::HTTP_OK);
@@ -23,7 +23,7 @@ class ChannelController extends Controller
      *
      * @return JsonResponse
      */
-    public function createNewChannel(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required'
@@ -44,15 +44,14 @@ class ChannelController extends Controller
      *
      * @return JsonResponse
      */
-    public function updateChannel(Request $request)
+    public function update($id,Request $request)
     {
         $request->validate([
-            'id' => 'required',
             'name' => 'required'
         ]);
 
         // Update Channel To Database
-        resolve(ChannelRepository::class)->update($request);
+        resolve(ChannelRepository::class)->update($id,$request);
 
         return response()->json([
             'message' => 'channel edited successfully'
@@ -66,14 +65,10 @@ class ChannelController extends Controller
      *
      * @return JsonResponse
      */
-    public function deleteChannel(Request $request)
+    public function destroy($id)
     {
-        $request->validate([
-            'id'=>['required']
-        ]);
-
         // Delete Channel In DataBase
-        resolve(ChannelRepository::class)->delete($request->id);
+        resolve(ChannelRepository::class)->delete($id);
 
         return response()->json([
             "message"=>'channel deleted successfully'
