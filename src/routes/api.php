@@ -32,12 +32,7 @@ Route::group(['namespace' => $api_namespace], function () {
         });
 
         // Channel Routes
-        Route::group(['prefix' => 'channel/'], function () {
-            Route::get('all', 'ChannelController@getAllChannelsList')->name("channels.all");
-            Route::post('create', 'ChannelController@createNewChannel')->name("channels.create");
-            Route::put('update', 'ChannelController@updateChannel')->name("channels.update");
-            Route::delete('delete', 'ChannelController@deleteChannel')->name("channels.delete");
-        });
+        Route::apiResource('/channel','ChannelController');
     });
 
 });
