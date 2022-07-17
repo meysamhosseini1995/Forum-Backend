@@ -3,14 +3,27 @@
 namespace Tests\Feature\Http\Controllers\API\V01;
 
 use App\Models\User;
+use Database\Seeders\RoleAndPermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
+use Tests\SeedDatabaseState;
 use Tests\TestCase;
 
 class AuthControllerTest extends TestCase
 {
-    use RefreshDatabase;
+//    use RefreshDatabase;
 
+//    public function setUp() : void
+//    {
+//        $this->seed(RoleAndPermissionSeeder::class);
+//    }
+
+    public function setUp() : void
+    {
+        parent::setUp();
+        SeedDatabaseState::$seeders = [RoleAndPermissionSeeder::class];
+        $this->seedDatabase();
+    }
 
     /**
      * Test Register
@@ -25,7 +38,7 @@ class AuthControllerTest extends TestCase
     {
         $response = $this->postJson(route('auth.register'), [
             'name'     => 'Meysam Hosseini',
-            'email'    => 'meysamhosseini1995@gmail.com',
+            'email'    => 'meysamhosseini1996@gmail.com',
             'password' => '12345678'
         ]);
         $response->assertStatus(Response::HTTP_CREATED);
