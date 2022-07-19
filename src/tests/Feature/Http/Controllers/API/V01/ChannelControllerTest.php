@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers\API\V01;
 use App\Models\Channel;
 use App\Models\User;
 use Illuminate\Http\Response;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ChannelControllerTest extends TestCase
@@ -26,8 +27,9 @@ class ChannelControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $user->givePermissionTo('channel management');
+        Sanctum::actingAs($user);
 
-        $response = $this->actingAs($user)->postJson(route('channel.store'));
+        $response = $this->postJson(route('channel.store'));
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
@@ -37,7 +39,9 @@ class ChannelControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $user->givePermissionTo('channel management');
-        $response = $this->actingAs($user)->postJson(route('channel.store'), [
+        Sanctum::actingAs($user);
+
+        $response = $this->postJson(route('channel.store'), [
             'name' => 'Laravel'
         ]);
 
@@ -51,7 +55,9 @@ class ChannelControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $user->givePermissionTo('channel management');
-        $response = $this->actingAs($user)->putJson(route('channel.update', ['channel' => 0]));
+        Sanctum::actingAs($user);
+
+        $response = $this->putJson(route('channel.update', ['channel' => 0]));
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
@@ -60,11 +66,12 @@ class ChannelControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $user->givePermissionTo('channel management');
+        Sanctum::actingAs($user);
 
         $channel = Channel::factory()->create([
             'name' => 'Laravel'
         ]);
-        $response = $this->actingAs($user)->putJson(route('channel.update', ['channel' => $channel->id]), [
+        $response = $this->putJson(route('channel.update', ['channel' => $channel->id]), [
             'name' => 'Vue Js',
         ]);
 
@@ -89,10 +96,12 @@ class ChannelControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $user->givePermissionTo('channel management');
+        Sanctum::actingAs($user);
+        
         $channel = Channel::factory()->create([
             'name' => 'Laravel'
         ]);
-        $response = $this->actingAs($user)->deleteJson(route('channel.destroy', ['channel' => $channel->id]));
+        $response = $this->deleteJson(route('channel.destroy', ['channel' => $channel->id]));
 
         $response->assertStatus(Response::HTTP_OK);
     }

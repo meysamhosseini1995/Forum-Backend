@@ -13,7 +13,7 @@ class ChannelController extends Controller
 
     public function __construct()
     {
-        $this->middleware(["permission:channel management"])->except(['index']);
+        $this->middleware(["permission:channel management","auth:sanctum"])->except(['index']);
     }
 
 
