@@ -37,8 +37,8 @@ class AuthControllerTest extends TestCase
     public function test_new_user_can_register()
     {
         $response = $this->postJson(route('auth.register'), [
-            'name'     => 'Meysam Hosseini',
-            'email'    => 'meysamhosseini1996@gmail.com',
+            'name'     => fake()->name,
+            'email'    => fake()->email,
             'password' => '12345678'
         ]);
         $response->assertStatus(Response::HTTP_CREATED);
