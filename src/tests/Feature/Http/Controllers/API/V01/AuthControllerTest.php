@@ -3,27 +3,13 @@
 namespace Tests\Feature\Http\Controllers\API\V01;
 
 use App\Models\User;
-use Database\Seeders\RoleAndPermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-use Tests\SeedDatabaseState;
 use Tests\TestCase;
 
 class AuthControllerTest extends TestCase
 {
-//    use RefreshDatabase;
-
-//    public function setUp() : void
-//    {
-//        $this->seed(RoleAndPermissionSeeder::class);
-//    }
-
-    public function setUp() : void
-    {
-        parent::setUp();
-        SeedDatabaseState::$seeders = [RoleAndPermissionSeeder::class];
-        $this->seedDatabase();
-    }
+    use RefreshDatabase;
 
     /**
      * Test Register
@@ -55,7 +41,6 @@ class AuthControllerTest extends TestCase
 
     public function test_user_can_login_with_true_credentials()
     {
-        //        $user = User::factory()->create()[0];
         $user = User::factory()->create();
         $response = $this->postJson(route('auth.login'), [
             'email'    => $user->email,
