@@ -8,6 +8,8 @@ use App\Repositories\ThreadRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ThreadController extends Controller
 {
@@ -88,11 +90,19 @@ class ThreadController extends Controller
         }
 
         // Update Channel To Database
-        resolve(ThreadRepository::class)->update($thread, $request);
+        if (Gate::forUser(Auth::user())->allows("user-thread",$thread)){
+            resolve(ThreadRepository::class)->update($thread, $request);
 
-        return response()->json([
-            'message' => 'thread update successfully'
-        ], Response::HTTP_OK);
+            return response()->json([
+                'message' => 'thread update successfully'
+            ], Response::HTTP_OK);
+        }
+        else{
+            return response()->json([
+                "message"=> "access denied"
+            ],Response::HTTP_FORBIDDEN);
+        }
+
     }
 
 
@@ -103,14 +113,21 @@ class ThreadController extends Controller
      *
      * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Thread $thread)
     {
         // Delete Channel In DataBase
-        resolve(ThreadRepository::class)->delete($id);
+        if (Gate::forUser(Auth::user())->allows("user-thread",$thread)){
+            resolve(ThreadRepository::class)->delete($thread->id);
 
-        return response()->json([
-            "message" => 'thread deleted successfully'
-        ], Response::HTTP_OK);
+            return response()->json([
+                "message" => 'thread deleted successfully'
+            ], Response::HTTP_OK);
+        }
+        else{
+            return response()->json([
+                "message"=> "access denied"
+            ],Response::HTTP_FORBIDDEN);
+        }
     }
 
 

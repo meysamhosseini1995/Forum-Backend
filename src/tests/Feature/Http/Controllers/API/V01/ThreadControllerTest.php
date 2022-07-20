@@ -89,7 +89,12 @@ class ThreadControllerTest extends TestCase
         Sanctum::actingAs($user);
 
         $channel = Channel::factory()->create();
-        $thread = Thread::factory()->create();
+        $thread = Thread::factory()->create([
+            'title'      => 'Vue Js',
+            'content'    => fake()->realText(),
+            'channel_id' => $channel->id,
+            'user_id'    => $user->id,
+        ]);
         $response = $this->putJson(route('thread.update', [$thread]), [
             'title'      => 'Vue Js',
             'content'    => fake()->realText(),
@@ -104,12 +109,17 @@ class ThreadControllerTest extends TestCase
 
     public function test_add_best_answer_id_for_thread()
     {
-        $this->withoutExceptionHandling();
         $user = User::factory()->create();
         $user->givePermissionTo('thread management');
         Sanctum::actingAs($user);
 
-        $thread = Thread::factory()->create();
+        $channel = Channel::factory()->create();
+        $thread = Thread::factory()->create([
+            'title'      => 'Vue Js',
+            'content'    => fake()->realText(),
+            'channel_id' => $channel->id,
+            'user_id'    => $user->id,
+        ]);
         $response = $this->putJson(route('thread.update', [$thread]), [
             'best_answer_id' => 1,
         ]);
@@ -131,7 +141,13 @@ class ThreadControllerTest extends TestCase
         $user->givePermissionTo('thread management');
         Sanctum::actingAs($user);
 
-        $thread = Thread::factory()->create();
+        $channel = Channel::factory()->create();
+        $thread = Thread::factory()->create([
+            'title'      => 'Vue Js',
+            'content'    => fake()->realText(),
+            'channel_id' => $channel->id,
+            'user_id'    => $user->id,
+        ]);
         $response = $this->deleteJson(route('thread.destroy', [$thread]));
 
         $response->assertStatus(Response::HTTP_OK);
