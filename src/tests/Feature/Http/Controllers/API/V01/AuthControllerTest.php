@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class AuthControllerTest extends TestCase
 {
-    use RefreshDatabase;
+//    use RefreshDatabase;
 
     /**
      * Test Register
