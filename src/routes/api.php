@@ -35,6 +35,8 @@ Route::group(['namespace' => $api_namespace], function () {
         Route::apiResource('channel','ChannelController');
         // Thread Routes
         Route::apiResource('thread','ThreadController');
+        // Answer Routes
+        Route::apiResource('answer','AnswerController');
     });
 
 });
