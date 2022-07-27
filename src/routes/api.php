@@ -37,6 +37,10 @@ Route::group(['namespace' => $api_namespace], function () {
         Route::apiResource('thread','ThreadController');
         // Answer Routes
         Route::apiResource('answer','AnswerController');
+
+        // Subscribe Routes
+        Route::post('{thread}/subscribe','SubscribeController@subscribe')->name('subscribe');
+        Route::post('{thread}/unsubscribe','SubscribeController@unSubscribe')->name('unSubscribe');
     });
 
 });
